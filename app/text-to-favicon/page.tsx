@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import WebFont from "webfontloader";
 import { Gradient } from "../../components/Gradient";
 
-
 const AdvancedTextToFavicon = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [text, setText] = useState("F");
@@ -22,6 +21,7 @@ const AdvancedTextToFavicon = () => {
   const [textShadow, setTextShadow] = useState(false);
   const [textStroke, setTextStroke] = useState(false);
 
+  // Only run the font loader on the client side to avoid 'window' issue during SSR
   useEffect(() => {
     if (typeof window !== "undefined") {
       fetch(
@@ -36,28 +36,46 @@ const AdvancedTextToFavicon = () => {
     }
   }, []);
 
+  // Load the selected font dynamically
   useEffect(() => {
-    setIsFontLoaded(false);
-    WebFont.load({
-      google: {
-        families: [font]
-      },
-      active: () => {
-        setIsFontLoaded(true);
-      }
-    });
+    if (typeof window !== "undefined") {
+      setIsFontLoaded(false);
+      WebFont.load({
+        google: {
+          families: [font],
+        },
+        active: () => {
+          setIsFontLoaded(true);
+        },
+      });
+    }
   }, [font]);
 
+  // Generate favicon when dependencies change
   useEffect(() => {
     if (isFontLoaded) {
       generateFavicon();
     }
-  }, [text, font, fontSize, textColor, bgColor, gradientStart, gradientEnd, useGradient, shape, textShadow, textStroke, isFontLoaded]);
+  }, [
+    text,
+    font,
+    fontSize,
+    textColor,
+    bgColor,
+    gradientStart,
+    gradientEnd,
+    useGradient,
+    shape,
+    textShadow,
+    textStroke,
+    isFontLoaded,
+  ]);
 
+  // Function to generate favicon on canvas
   const generateFavicon = () => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
       if (ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -82,21 +100,21 @@ const AdvancedTextToFavicon = () => {
         ctx.fillStyle = textColor;
 
         // Reset shadow and stroke settings
-        ctx.shadowColor = 'transparent';
+        ctx.shadowColor = "transparent";
         ctx.shadowBlur = 0;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
         ctx.lineWidth = 0;
 
         if (textShadow) {
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+          ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
           ctx.shadowBlur = 4;
           ctx.shadowOffsetX = 2;
           ctx.shadowOffsetY = 2;
         }
 
         if (textStroke) {
-          ctx.strokeStyle = 'white';
+          ctx.strokeStyle = "white";
           ctx.lineWidth = 2;
           ctx.strokeText(text, 32, 32);
         }
@@ -108,6 +126,7 @@ const AdvancedTextToFavicon = () => {
     }
   };
 
+  // Download the generated favicon in the selected format
   const downloadFavicon = (format: string) => {
     if (preview) {
       const link = document.createElement("a");
@@ -121,8 +140,10 @@ const AdvancedTextToFavicon = () => {
     <div className="container mx-auto p-4">
       <div className="card bg-base-200 shadow-xl">
         <div className="card-body p-4">
-          <h2 className="card-title text-center text-xl font-bold mb-4">Text to Favicon Generator</h2>
-          
+          <h2 className="card-title text-center text-xl font-bold mb-4">
+            Text to Favicon Generator
+          </h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="form-control">
@@ -310,4 +331,3 @@ const AdvancedTextToFavicon = () => {
 };
 
 export default AdvancedTextToFavicon;
-
