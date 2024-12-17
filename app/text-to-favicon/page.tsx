@@ -23,15 +23,17 @@ const AdvancedTextToFavicon = () => {
   const [textStroke, setTextStroke] = useState(false);
 
   useEffect(() => {
-    fetch(
-      "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDNc73rnbqLvFTq4sfU1i6vt0qCNOga8DA"
-    )
-      .then((response) => response.json())
-      .then((data: { items: { family: string }[] }) => {
-        const fontList = data.items.map((item) => item.family);
-        setFonts(fontList);
-      })
-      .catch((error) => console.error("Error fetching fonts:", error));
+    if (typeof window !== "undefined") {
+      fetch(
+        "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDNc73rnbqLvFTq4sfU1i6vt0qCNOga8DA"
+      )
+        .then((response) => response.json())
+        .then((data: { items: { family: string }[] }) => {
+          const fontList = data.items.map((item) => item.family);
+          setFonts(fontList);
+        })
+        .catch((error) => console.error("Error fetching fonts:", error));
+    }
   }, []);
 
   useEffect(() => {
