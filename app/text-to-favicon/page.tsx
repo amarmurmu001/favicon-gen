@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import WebFont from "webfontloader";
 import { Gradient } from "../../components/Gradient";
+import Image from 'next/image';
 
 const AdvancedTextToFavicon = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -277,9 +278,9 @@ const AdvancedTextToFavicon = () => {
             <div className="mt-4">
               <h3 className="text-lg font-bold mb-2">Preview</h3>
               <div className="flex justify-center items-center space-x-4">
-                <img src={preview} alt="Favicon Preview" className="w-8 h-8 border" />
-                <img src={preview} alt="Favicon Preview" className="w-16 h-16 border" />
-                <img src={preview} alt="Favicon Preview" className="w-32 h-32 border" />
+                <Image src={preview} alt="Favicon Preview" width={32} height={32} className="border" />
+                <Image src={preview} alt="Favicon Preview" width={64} height={64} className="border" />
+                <Image src={preview} alt="Favicon Preview" width={128} height={128} className="border" />
               </div>
             </div>
           )}
