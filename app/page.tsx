@@ -9,7 +9,7 @@ export default function LandingPage() {
           <div className="hero-content text-center">
             <div className="max-w-md">
               <h1 className="text-5xl font-bold mb-8">Create stunning favicons in seconds</h1>
-              <p className="text-lg mb-8">Transform your website's identity with our powerful and easy-to-use Text to Favicon Generator. Stand out from the crowd with unique, customized favicons.</p>
+              <p className="text-lg mb-8">Transform your website&apos;s identity with our powerful and easy-to-use Text to Favicon Generator. Stand out from the crowd with unique, customized favicons.</p>
               <Link href="/text-to-favicon" className="btn btn-primary btn-lg">
                 Start Creating <ArrowRight className="ml-2" />
               </Link>

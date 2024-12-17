@@ -1,5 +1,6 @@
 "use client"
 import { useRef, useState } from "react";
+import Image from 'next/image'; // Import Image from next/image
 
 const EmojiToFavicon = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -56,7 +57,7 @@ const EmojiToFavicon = () => {
         {preview && (
           <div className="mt-4">
             <h3 className="text-lg font-bold">Preview</h3>
-            <img src={preview} alt="Favicon Preview" className="w-16 h-16" />
+            <Image src={preview} alt="Favicon Preview" width={64} height={64} className="w-16 h-16" />
             <button className="btn btn-secondary mt-4" onClick={downloadFavicon}>
               Download Favicon
             </button>
