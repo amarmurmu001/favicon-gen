@@ -327,8 +327,7 @@ const AdvancedTextToFavicon = () => {
   );
 };
 
-dynamic(() => Promise.resolve(AdvancedTextToFavicon), {
+export default dynamic(() => Promise.resolve(AdvancedTextToFavicon), {
   ssr: false,
 });
 
-export default AdvancedTextToFavicon;
