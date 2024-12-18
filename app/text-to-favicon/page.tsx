@@ -21,7 +21,7 @@ const AdvancedTextToFavicon = () => {
   const [textShadow, setTextShadow] = useState(false);
   const [textStroke, setTextStroke] = useState(false);
 
-  // Only run the font loader on the client side to avoid 'window' issue during SSR
+  // Load fonts only on the client side
   useEffect(() => {
     if (typeof window !== "undefined") {
       fetch(
