@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRef, useState, useEffect } from "react";
 import WebFont from "webfontloader";
 import { Gradient } from "../../components/Gradient";
@@ -21,8 +22,8 @@ const AdvancedTextToFavicon = () => {
   const [textShadow, setTextShadow] = useState(false);
   const [textStroke, setTextStroke] = useState(false);
 
-  // Load fonts only on the client side
   useEffect(() => {
+    // Ensure this runs only in the browser
     if (typeof window !== "undefined") {
       fetch(
         "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDNc73rnbqLvFTq4sfU1i6vt0qCNOga8DA"
@@ -36,7 +37,6 @@ const AdvancedTextToFavicon = () => {
     }
   }, []);
 
-  // Load the selected font dynamically
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsFontLoaded(false);
@@ -51,7 +51,6 @@ const AdvancedTextToFavicon = () => {
     }
   }, [font]);
 
-  // Generate favicon when dependencies change
   useEffect(() => {
     if (isFontLoaded) {
       generateFavicon();
@@ -71,8 +70,9 @@ const AdvancedTextToFavicon = () => {
     isFontLoaded,
   ]);
 
-  // Function to generate favicon on canvas
   const generateFavicon = () => {
+    if (typeof window === "undefined") return;
+
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext("2d");
@@ -99,7 +99,6 @@ const AdvancedTextToFavicon = () => {
         ctx.textBaseline = "middle";
         ctx.fillStyle = textColor;
 
-        // Reset shadow and stroke settings
         ctx.shadowColor = "transparent";
         ctx.shadowBlur = 0;
         ctx.shadowOffsetX = 0;
@@ -120,13 +119,11 @@ const AdvancedTextToFavicon = () => {
         }
 
         ctx.fillText(text, 32, 32);
-
         setPreview(canvas.toDataURL("image/png"));
       }
     }
   };
 
-  // Download the generated favicon in the selected format
   const downloadFavicon = (format: string) => {
     if (preview) {
       const link = document.createElement("a");
@@ -329,5 +326,9 @@ const AdvancedTextToFavicon = () => {
     </div>
   );
 };
+
+dynamic(() => Promise.resolve(AdvancedTextToFavicon), {
+  ssr: false,
+});
 
 export default AdvancedTextToFavicon;
