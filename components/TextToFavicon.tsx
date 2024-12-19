@@ -24,7 +24,7 @@ const AdvancedTextToFavicon = () => {
 
   useEffect(() => {
     // Ensure this runs only in the browser
-    if (typeof window !== "undefined") {
+   
       fetch(
         "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDNc73rnbqLvFTq4sfU1i6vt0qCNOga8DA"
       )
@@ -34,7 +34,7 @@ const AdvancedTextToFavicon = () => {
           setFonts(fontList);
         })
         .catch((error) => console.error("Error fetching fonts:", error));
-    }
+    
   }, []);
 
   useEffect(() => {
