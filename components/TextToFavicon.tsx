@@ -71,7 +71,6 @@ const AdvancedTextToFavicon = () => {
   ]);
 
   const generateFavicon = () => {
-    if (typeof window === "undefined") return;
 
     const canvas = canvasRef.current;
     if (canvas) {
