@@ -38,7 +38,7 @@ const AdvancedTextToFavicon = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    
       setIsFontLoaded(false);
       WebFont.load({
         google: {
@@ -48,8 +48,8 @@ const AdvancedTextToFavicon = () => {
           setIsFontLoaded(true);
         },
       });
-    }
-  }, [font]);
+    },[]);
+  
 
   useEffect(() => {
     if (isFontLoaded) {
